@@ -49,6 +49,12 @@ const submitApplication = async () => {
   }
   modal.confirm(false)
 }
+const submitForm = () => {
+  const formElement = document.querySelector('form#applicationForm') as HTMLFormElement;
+  if (formElement) {
+    formElement.requestSubmit(); // Trigger form submission
+  }
+}
 </script>
 
 <template>
@@ -65,7 +71,7 @@ const submitApplication = async () => {
     <BModal :visible="modal.isVisible.value" :confirm="modal.confirm">
       <template #header>Submit loan application</template>
 
-      <form @submit.prevent="submitApplication()">
+      <form id="applicationForm" ref="applicationForm" @submit.prevent="submitApplication()">
         <!-- Need to change with v-for after change state with object -->
         <label for="applicant_name">Name</label>
         <BTextInput v-model="formData.applicantName" id="applicant_name" type="text" required />
@@ -107,7 +113,7 @@ const submitApplication = async () => {
       </form>
 
       <template #footer>
-        <BButton type="submit" variant="primary" label="Submit"></BButton>
+        <BButton @click="submitForm" type="submit" variant="primary" label="Submit"></BButton>
         <BButton label="Cancel" @click="modal.confirm(false)"></BButton>
       </template>
     </BModal>
